@@ -1,0 +1,15 @@
+{
+    "netbeans.jdkhome": "c:\\Program Files\\Java\\jdk-17",
+    "netbeans.project.jdkhome": "c:\\Program Files\\Java\\jdk-17",
+    "java.jdt.ls.java.home": "c:\\Program Files\\Java\\jdk-17",
+    "terminal.integrated.env.windows": {
+        "JAVA_HOME": "c:\\Program Files\\Java\\jdk-17",
+        "PATH": "c:\\Program Files\\Java\\jdk-17\\bin;${env:PATH}"
+    },
+    "maven.terminal.customEnv": [
+        {
+            "environmentVariable": "JAVA_HOME",
+            "value": "c:\\Program Files\\Java\\jdk-17"
+        }
+    ]
+}
