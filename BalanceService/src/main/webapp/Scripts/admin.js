@@ -26,9 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fetch users from servlet
     async function fetchUsers() {
         try {
+
             const response = await fetch('/service/AdminBalance');
-            users = await response.json();
-            renderUsers();
+            const text = await response.text();
+
+            try {
+                users = JSON.parse(text);
+                renderUsers();
+            } catch (err) {
+                console.error('Invalid JSON:', text);
+                throw err; // or handle gracefully
+            }
+
         } catch (error) {
             console.error('Error fetching users:', error);
         }
@@ -40,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${user.msisdn}</td>
-                <td>$${user.balance}</td>
+                <td>${user.balance} LE</td>
                 <td>
                     <button class="update-btn" data-index="${index}">Update</button>
                     <button class="delete-btn" data-index="${index}">Delete</button>
@@ -49,11 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
             userList.appendChild(row);
         });
 
-        document.querySelectorAll(".delete-btn").forEach(btn => 
+        document.querySelectorAll(".delete-btn").forEach(btn =>
             btn.addEventListener("click", event => openDeleteModal(event.target.dataset.index))
         );
 
-        document.querySelectorAll(".update-btn").forEach(btn => 
+        document.querySelectorAll(".update-btn").forEach(btn =>
             btn.addEventListener("click", event => openUpdateModal(event.target.dataset.index))
         );
     }
@@ -86,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const result = await response.json();
                 if (result.success) {
-                    await fetchUsers(); // Refresh user list from server
+                    await fetchUsers();
                     closeDeleteModal();
                 } else {
                     alert('Failed to delete user. Please try again.');
@@ -102,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function openUpdateModal(index) {
         selectedUserIndex = index;
-        newBalanceInput.value = users[index].balance; 
+        newBalanceInput.value = users[index].balance;
         updateModal.style.display = "flex";
     }
     function closeUpdateModal() {
@@ -171,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ msisdn, balance })
+                body: JSON.stringify({msisdn, balance})
             });
 
             const result = await response.json();
@@ -193,9 +202,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Close modals when clicking outside
     window.onclick = (event) => {
-        if (event.target === deleteModal) closeDeleteModal();
-        if (event.target === updateModal) closeUpdateModal();
-        if (event.target === addUserModal) addUserModal.style.display = "none";
+        if (event.target === deleteModal)
+            closeDeleteModal();
+        if (event.target === updateModal)
+            closeUpdateModal();
+        if (event.target === addUserModal)
+            addUserModal.style.display = "none";
     };
 
     // Ensure modals don't open automatically on reload
@@ -203,18 +215,20 @@ document.addEventListener("DOMContentLoaded", () => {
     updateModal.style.display = "none";
     addUserModal.style.display = "none";
 
+    function searchUsers() {
+        const searchValue = document.getElementById('searchMsisdn').value.trim().toLowerCase();
+        const rows = document.getElementById('usersTable').getElementsByTagName('tbody')[0].rows;
+
+        for (let row of rows) {
+            if (searchValue === '' || row.cells[0].textContent.toLowerCase().includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    }
+
     // Initialize the page
     fetchUsers();
 });
-function searchUsers() {
-    const searchValue = document.getElementById('searchMsisdn').value.trim().toLowerCase();
-    const rows = document.getElementById('usersTable').getElementsByTagName('tbody')[0].rows;
 
-    for (let row of rows) {
-        if (searchValue === '' || row.cells[0].textContent.toLowerCase().includes(searchValue)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    }
-}

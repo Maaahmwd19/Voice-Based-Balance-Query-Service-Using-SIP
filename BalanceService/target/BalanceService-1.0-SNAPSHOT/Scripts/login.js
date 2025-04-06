@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        const adminCredentials = { username: "admin", password: "admin" };
+        const adminCredentials = { username: "mahmoud", password: "123" };
 
         if (username === adminCredentials.username && password === adminCredentials.password) {
             localStorage.setItem("loggedInUser", JSON.stringify({ username }));
