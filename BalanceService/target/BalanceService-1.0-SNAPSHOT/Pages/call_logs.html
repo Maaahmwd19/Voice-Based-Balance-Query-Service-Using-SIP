@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Logs</title>
+     <link rel="stylesheet" href="../Styles/style.css">
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+     <script src="../Scripts/call_logs.js" defer></script> 
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="admin.html">Home</a></li>
+                <li><a href="call_logs.html">Call Logs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Call Logs</h1>
+        
+        <!-- Table to display the data -->
+        <table id="callLogsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Caller</th>
+                    <th>Callee</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated here via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px 20px;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</body>
+</html>
